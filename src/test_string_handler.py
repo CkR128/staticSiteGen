@@ -1,6 +1,6 @@
 import unittest
 
-from htmlnode import HTMLNode, LeafNode, ParentNode
+from htmlnode import HTMLNode, LeafNode
 from string_handler import extract_all_markdown_images, extract_all_markdown_links, split_node_delimiter, split_node_images, split_node_link, text_to_textnodes
 from textnode import TextNode, TextType 
 
