@@ -58,9 +58,8 @@ def generate_page(from_path, template_path, dest_path, rootWebPath=""):
 
     if rootWebPath != "":
         rootWebPath = f"{rootWebPath}/"
-
-    final_content = re.sub(r"href=\"/", f"href=\"/{rootWebPath}", final_content)
-    final_content = re.sub(r"src=\"/", f"src=\"/{rootWebPath}", final_content)
+        final_content = final_content.replace(f"href=\"/", f"href=\"/{rootWebPath}")
+        final_content = final_content.replace(f"src=\"/", f"src=\"/{rootWebPath}")
 
     file = open(dest_path, 'w')
     file.write(final_content)
