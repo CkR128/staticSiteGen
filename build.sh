@@ -1,1 +1,1 @@
-python3 src/main.py CkR128
+python3 src/main.py staticSiteGen
