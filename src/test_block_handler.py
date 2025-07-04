@@ -87,6 +87,16 @@ This is the same paragraph on a new line
         self.assertEqual(block, BlockType.QUOTE)
 
         md = """
+> "I am in fact a Hobbit in all but size."
+>
+> -- J.R.R. Tolkien
+"""
+        blocks = markdown_to_blocks(md)
+        self.assertTrue(len(blocks) == 1)
+        block = block_to_block_type(blocks[0])
+        self.assertEqual(block, BlockType.QUOTE)
+
+        md = """
 ###### This is a list
 """
         blocks = markdown_to_blocks(md)

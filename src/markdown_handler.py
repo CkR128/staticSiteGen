@@ -2,18 +2,21 @@ import re
 from typing import List
 from block_handler import BlockType, block_to_block_type, markdown_to_blocks
 from htmlnode import HTMLNode, LeafNode, ParentNode
+import htmlnode
 from string_handler import text_to_textnodes
 from textnode import TextNode, TextType
-keepInLine=True
 
-def text_to_htmlNode(block: str) -> List[LeafNode]:
+def text_to_htmlNode(block: str, keepInLine: bool = True) -> List[LeafNode]:
     if keepInLine:
         block = block.replace("\n", " ")
 
+
     textNodes = text_to_textnodes(block)
+
     childNodes = []
     for node in textNodes:
-        childNodes.append(node.text_node_to_html_node())
+        htmlNode = node.text_node_to_html_node()
+        childNodes.append(htmlNode)
 
     return childNodes
 def text_to_codeBlock(block: str) -> LeafNode:
@@ -45,7 +48,7 @@ def text_to_list(block: str) -> List[LeafNode]:
         line = re.sub(r"^[0-9]+\. ", "", line)
 
         children = text_to_htmlNode(line)
-        mapped.append(LeafNode("li", line))
+        mapped.append(ParentNode("li", children))
     return mapped
 
 def markdown_to_html(mdString: str) -> HTMLNode:
@@ -88,12 +91,13 @@ def markdown_to_html(mdString: str) -> HTMLNode:
             lines = block.splitlines()
             newLines = []
             for line in lines:
-                newLines.append(re.sub(r"^> ", "", line))
+                newline = re.sub(r"^> ", "", line)
+                newline = re.sub(r"^>", "", newline)
+                newLines.append(newline)
             block = "\n".join(newLines)
 
-            childNodes = text_to_htmlNode(block)
-            parentNode = ParentNode("blockquote", childNodes)
-            nodes.append(parentNode)
+            childNodes = text_to_htmlNode(block, False)
+            nodes.append(ParentNode("blockquote", childNodes))
             continue
 
     return ParentNode("div", nodes)

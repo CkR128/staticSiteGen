@@ -25,7 +25,7 @@ def block_to_block_type(blockStr: str) -> BlockType:
         if line == "":
             continue
 
-        if quote and re.match(r"^> .*", line) == None:
+        if quote and re.match(r"^>([ .*]|$)", line) == None:
             quote = False
         if unordered and re.match(r"^- .*", line) == None:
             unordered = False

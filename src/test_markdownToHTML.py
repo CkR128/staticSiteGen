@@ -36,6 +36,19 @@ This is another paragraph with _italic_ text and `code` here
             "<div><ol><li>one</li><li>two</li><li>three</li></ol></div>",
         )
 
+    def test_quote(self):
+        md = """
+> one
+> two
+> three
+"""
+        node = markdown_to_html(md)
+        html = node.to_html()
+        # self.assertEqual(
+        #     html,
+        #     "<div><ul><li>one</li><li>two</li><li>three</li></ul></div>",
+        # )
+
     def test_unordered(self):
         md = """
 - one
